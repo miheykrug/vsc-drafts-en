@@ -19,30 +19,27 @@ export function createCreateFile(provider: ref<FileTreeDataProvider>) {
       } else {
         newPath = provider.value.getRootPath();
       }
-      // vscode.window.showInformationMessage(newPath);
       if (!newPath) {
         return;
       }
       const fileName = await vscode.window.showInputBox({
-        prompt: "请输入文件名",
-        placeHolder: `在 ${
-          path.relative(provider.value.getRootPath(), newPath) || "根目录"
-        } 中新建文件`,
+        prompt: "Please enter the file name",
+        placeHolder: `Create a new file in ${
+          path.relative(provider.value.getRootPath(), newPath) || "root directory"
+        }`,
       });
       if (!fileName) {
         return;
       }
       const filePath = path.normalize(path.join(newPath, fileName));
       const fileUri = vscode.Uri.file(filePath);
-      // 判断文件是否存在
       try {
         await vscode.workspace.fs.stat(fileUri);
-        vscode.window.showErrorMessage(`${filePath} 已存在，创建失败`);
+        vscode.window.showErrorMessage(`${filePath} already exists, creation failed`);
         return;
       } catch (error) {}
       await vscode.workspace.fs.writeFile(fileUri, new Uint8Array());
       provider.value?.refresh();
-      // 打开文件
       await vscode.window.showTextDocument(
         await vscode.workspace.openTextDocument(fileUri)
       );

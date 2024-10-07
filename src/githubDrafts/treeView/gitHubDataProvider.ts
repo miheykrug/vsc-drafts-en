@@ -55,12 +55,11 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
     });
 
     if (!element) {
-      const tipItem = this.createFocusRootItem("当前仓库", "qx-tip-icon");
+      const tipItem = this.createFocusRootItem("Current Repository", "qx-tip-icon");
       tipItem.description = `${this.config.value!.owner}/${
         this.config.value!.repo
       }`;
       items.unshift(tipItem);
-      // items.push(this.createFocusRootItem("—— 根目录操作 ——"));
     }
 
     return items;
@@ -103,7 +102,6 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
     });
   }
 
-  // 创建临时文件
   createTempFile(filePath: string, content: Buffer) {
     const tempFilePath = path.join(this.tempPath, filePath);
     const dir = path.dirname(tempFilePath);
@@ -119,20 +117,15 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
   }
 
   async openFile(gitPath: string) {
-    // 获取文件内容
     const { data } = await this.getContent(gitPath);
     const content = (data as { content: string }).content;
-    // 获取文件编码
     const encoding = (data as { encoding: string }).encoding;
     if (!content && encoding === "none") {
-      vscode.window.showErrorMessage(`${gitPath} 不是一个文本文件`);
+      vscode.window.showErrorMessage(`${gitPath} is not a text file`);
       return;
     }
-    // 解码文件内容
     const decoded = Buffer.from(content, encoding as BufferEncoding);
-    // 创建临时文件
     const tempFilePath = this.createTempFile(gitPath, decoded);
-    // 使用临时文件路径打开文档
     vscode.commands.executeCommand(
       "vscode.open",
       vscode.Uri.file(tempFilePath)
@@ -140,7 +133,7 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
   }
 
   async createOrUpdateFile(gitPath: string, content: string, create: boolean) {
-    let path = gitPath.replace(/\\/g, "/"); // github使用的分隔符是“/”
+    let path = gitPath.replace(/\\/g, "/");
     let sha: string | undefined;
     if (!create) {
       try {
@@ -152,7 +145,7 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
         sha = (data as { sha: string }).sha;
         path = (data as { path: string }).path;
       } catch (error) {
-        vscode.window.showErrorMessage(`${path} 更新失败，请重新保存`);
+        vscode.window.showErrorMessage(`${path} update failed, please save again`);
         return false;
       }
     } else {
@@ -162,11 +155,10 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
           repo: this.config.value!.repo,
           path,
         });
-        vscode.window.showErrorMessage(`${path} 已存在，创建失败`);
+        vscode.window.showErrorMessage(`${path} already exists, creation failed`);
         return false;
       } catch (error) {}
     }
-    // vscode.window.showInformationMessage("sha: " + sha + " path: " + path);
     await this.github.repos.createOrUpdateFileContents({
       owner: this.config.value!.owner,
       repo: this.config.value!.repo,
@@ -184,14 +176,11 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
       repo: this.config.value!.repo,
       path: gitPath,
     });
-    // 在GitHub中，不能直接删除一个文件夹，当文件夹为空时，它将自动被删除。
     if (Array.isArray(data)) {
-      // 如果是文件夹，递归删除所有文件
       for (const file of data) {
         await this.deleteFile(file.path);
       }
     } else {
-      // 如果是文件，直接删除
       const sha = (data as { sha: string }).sha;
       await this.github.repos.deleteFile({
         owner: this.config.value!.owner,
@@ -223,11 +212,8 @@ export class GitHubDataProvider implements vscode.TreeDataProvider<GitHubFile> {
   }
 
   async revealItem(gitPath: string) {
-    // 找到新创建的文件对应的树视图项
     const item = await this.findItem(gitPath);
-    // vscode.window.showInformationMessage("item: " + item?.path);
     if (item) {
-      // 展开到这个项，并将焦点设置到这个项上
       await this.treeView?.reveal(item, {
         select: true,
         focus: true,

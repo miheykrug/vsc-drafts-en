@@ -1,14 +1,14 @@
 {
     "src/githubDrafts": {
-        "description": "github远程草稿仓库"
+        "description": "GitHub remote drafts repository"
     },
     "src/draftsContainer": {
-        "description": "草稿面板"
+        "description": "Drafts panel"
     },
     "src/draftsList": {
-        "description": "草稿列表"
+        "description": "Drafts list"
     },
     "src/extension.ts": {
-        "description": "入口文件"
+        "description": "Entry file"
     }
 }

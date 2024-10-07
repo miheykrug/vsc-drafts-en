@@ -13,7 +13,6 @@ export function createOpenInExplorer(provider: ref<FileTreeDataProvider>) {
         return;
       }
       let folderPath = fileItem.resourceUri.fsPath;
-      // 如果是文件，获取文件所在目录
       if (fileItem.contextValue === "file") {
         folderPath = path.dirname(folderPath);
       }
@@ -27,7 +26,6 @@ function explorer(folderPath: string) {
     return;
   }
   if (containsNonAscii(folderPath)) {
-    // 存在非ascii字符则使用spawn打开
     try {
       switch (process.platform) {
         case "darwin":
@@ -43,12 +41,10 @@ function explorer(folderPath: string) {
       console.error(error);
     }
   } else {
-    // openExternal 只支持ascii字符路径
     vscode.env.openExternal(vscode.Uri.file(folderPath));
   }
 }
 
-// 判断是否包含非ascii字符
 function containsNonAscii(str: string) {
   return /[^\x00-\x7F]/.test(str);
 }

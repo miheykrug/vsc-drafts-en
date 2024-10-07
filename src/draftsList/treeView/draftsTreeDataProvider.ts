@@ -21,7 +21,6 @@ export class DraftsTreeDataProvider
       treeItem.contextValue = "rootItem";
       return treeItem;
     }
-    // 附加命令
     if (element.path.startsWith("GitHub:")) {
       const infoArr = element.path.split(":")[1].split("/");
       const config: GithubConfig = {
@@ -31,13 +30,13 @@ export class DraftsTreeDataProvider
       };
       treeItem.command = {
         command: "qx-drafts-github.showTreeView",
-        title: "打开 Github 草稿本",
+        title: "Open GitHub Draft Notebook",
         arguments: [config],
       };
     } else {
       treeItem.command = {
         command: "qx-drafts.showFileTree",
-        title: "打开草稿本",
+        title: "Open Draft Notebook",
         arguments: [element.path],
       };
     }
@@ -46,10 +45,8 @@ export class DraftsTreeDataProvider
 
   getChildren(element?: DraftItem): Thenable<DraftItem[]> {
     if (element) {
-      // 如果有元素，返回其子元素
       return Promise.resolve([]);
     } else {
-      // 如果没有元素，返回顶级元素
       return Promise.resolve(this.getDraftFolders());
     }
   }
@@ -59,7 +56,6 @@ export class DraftsTreeDataProvider
   }
 
   getDraftFolders(): DraftItem[] {
-    // 从 globalState 中读取草稿文件夹的路径
     const drafts = this.context.globalState
       .get<DraftItem[]>("qx-draftFolders", [])
       .filter((item) => {
@@ -67,8 +63,8 @@ export class DraftsTreeDataProvider
       });
     drafts.unshift(
       this.createFocusRootItem(
-        "提示",
-        "切换远端仓库后，将不会追踪同步其它仓库文件的修改，请注意保存后再切换"
+        "Notice",
+        "After switching the remote repository, modifications to other repository files will no longer be tracked and synchronized. Please save before switching."
       )
     );
     return drafts;
@@ -78,11 +74,10 @@ export class DraftsTreeDataProvider
     const findDraft = this.findDraft(item);
     if (findDraft.index !== -1) {
       vscode.window.showErrorMessage(
-        `${findDraft.draft.name}: ${findDraft.draft.path} 草稿本已存在，名称或路径都不能重复`
+        `${findDraft.draft.name}: ${findDraft.draft.path} Draft notebook already exists, name or path cannot be duplicated.`
       );
       return;
     }
-    // 将新的草稿文件夹路径添加到 globalState 中
     const draftFolders = this.getDraftFolders();
     draftFolders.push(item);
     this.context.globalState.update("qx-draftFolders", draftFolders);
@@ -91,7 +86,6 @@ export class DraftsTreeDataProvider
 
   findDraft(item: DraftItem) {
     const draftFolders = this.getDraftFolders();
-    // 名字和路径都不能重复
     const index = draftFolders.findIndex(
       (i) => i.name === item.name || i.path === item.path
     );

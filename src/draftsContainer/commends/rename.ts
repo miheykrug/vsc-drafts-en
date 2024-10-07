@@ -15,7 +15,7 @@ export function createRename(provider: ref<FileTreeDataProvider>) {
       );
       const dotIndex = oldName.indexOf(".");
       const newName = await vscode.window.showInputBox({
-        prompt: "输入新的文件名",
+        prompt: "Enter new file name",
         value: oldName,
         valueSelection: [0, dotIndex],
       });

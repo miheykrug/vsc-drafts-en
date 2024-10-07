@@ -1,76 +1,76 @@
 # Changelog
-各版本更新日志
+Update logs for each version
 
 ## [0.2.8] - 2024-05-15
 
-- 增加草稿本历史切换记录，在当前草稿本不存在时，会自动打开历史记录中首个在当前系统存在的草稿本。方便在win上进行远端开发，避免频繁弹出找不到路径。
+- Added draft notebook history switch record. When the current draft notebook does not exist, it will automatically open the first draft notebook in the history record that exists in the current system. This is convenient for remote development on Windows, avoiding frequent path not found pop-ups.
 
 ## [0.2.7] - 2024-05-06
 
-- 修复跨盘符时非缓存文件仍会尝试上传问题
+- Fixed the issue where non-cached files would still attempt to upload when crossing drive letters.
 
 ## [0.2.6] - 2024-05-01
 
-- 优化Remote体验
+- Optimized Remote experience.
 
 ## [0.2.5] - 2024-04-28
 
-- 修复草稿列表提示重复问题
+- Fixed the issue of duplicate prompts in the draft list.
 
 ## [0.2.4] - 2024-04-27
 
-- 远端草稿支持打开和保存Notebook文件，如.ipynb文件
-- 增加清除远端草稿的本地缓存功能
-- 增加浏览器打开GitHub仓库的按钮
-- 修复部分已知问题
+- Remote drafts now support opening and saving Notebook files, such as .ipynb files.
+- Added a feature to clear local cache of remote drafts.
+- Added a button to open the GitHub repository in the browser.
+- Fixed some known issues.
 
 ## [0.2.3] - 2024-04-24
 
-- 优化代码结构
-- 草稿列表支持保存 GitHub 远端草稿本
-- 优化UI，增加提示信息
+- Optimized code structure.
+- Draft list now supports saving GitHub remote draft notebooks.
+- Optimized UI and added prompt messages.
 
 ## [0.2.2] - 2024-04-23
 
-- 新增 GitHub 远端草稿本功能
-- 优化提示信息，增加错误提示
-- 优化代码逻辑
-- 更换部分图标
+- Added GitHub remote draft notebook feature.
+- Optimized prompt messages and added error prompts.
+- Optimized code logic.
+- Replaced some icons.
 
 ## [0.2.1] - 2024-04-22
 
-- 记录以往版本的Changelog
-- 重新整理README
+- Recorded changelog of previous versions.
+- Reorganized README.
 
 ## [0.2.0] - 2024-04-22
 
-- 插件更名为“草稿本(Drafts Scratch)”，增加 scratch 关键词，更符合IDEA用户认知
+- Renamed the plugin to "Drafts Scratch", added the scratch keyword, making it more recognizable to IDEA users.
 
 ## [0.1.4] - 2024-04-22
 
-- 修改根目录便捷操作提示
+- Modified the prompt for convenient operations in the root directory.
 
 ## [0.1.3] - 2024-04-21
 
-- 修复openExternal无法识别、打开存在非ascii字符的路径问题
+- Fixed the issue where openExternal could not recognize and open paths with non-ASCII characters.
 
 ## [0.1.2] - 2024-04-21
 
-- 创建文件后树视图将展开文件夹、聚焦到该文件
-- 使用内置openExternal代替spawn子进程，打开系统资源管理器速度更快
-- 优化代码逻辑，删除冗余代码
+- After creating a file, the tree view will expand the folder and focus on the file.
+- Used built-in openExternal instead of spawn child process, making opening the system file explorer faster.
+- Optimized code logic and removed redundant code.
 
 ## [0.1.1] - 2024-04-21
 
-- 增加草稿本列表，支持收藏当前草稿本、实时热切换。
-- 优化项目文件夹结构，不同功能拥有各自的commends、treeView文件夹
+- Added draft notebook list, supporting bookmarking the current draft notebook and real-time hot switching.
+- Optimized project folder structure, with separate commends and treeView folders for different features.
 
 ## [0.1.0] - 2024-04-20
 
-- 优化代码逻辑、性能，更新视图UI配置
-- 增加新VSCode窗口打开功能
+- Optimized code logic and performance, updated view UI configuration.
+- Added the feature to open a new VSCode window.
 
 ## [0.0.1] - 2024-04-20
 
-- 完成基本功能，支持打开一个文件夹并使用树视图展示文件结构
-- 对文件的基本操作，创建、删除、重命名、终端打开、系统资源管理器打开
+- Completed basic functions, supporting opening a folder and displaying the file structure using a tree view.
+- Basic file operations: create, delete, rename, open in terminal, open in system file explorer.

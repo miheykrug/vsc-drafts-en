@@ -12,7 +12,7 @@ export class GitHubFile extends vscode.TreeItem {
     if (root) {
       this.iconPath = new vscode.ThemeIcon(icon || "root-item-icon");
       this.contextValue = "rootItem";
-      this.description = "为了避免一些BUG，这里提供了对根目录的便捷操作";
+      this.description = "To avoid some bugs, convenient operations for the root directory are provided here";
       return;
     }
     if (collapsibleState === vscode.TreeItemCollapsibleState.None) {
@@ -20,7 +20,7 @@ export class GitHubFile extends vscode.TreeItem {
       this.contextValue = "file";
       this.command = {
         command: "qx-drafts-github.openFile",
-        title: "打开文件",
+        title: "Open File",
         arguments: [this],
       };
     } else {

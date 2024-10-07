@@ -67,7 +67,6 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<FileItem> {
       );
     }
 
-    // 对文件项进行排序，文件夹在前，文件在后
     directoryEntries.sort(([name1, type1], [name2, type2]) => {
       if (
         type1 === vscode.FileType.Directory &&
@@ -98,10 +97,9 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<FileItem> {
     });
 
     if (!element) {
-      const pathTipItem = this.createFocusRootItem("当前路径", "qx-tip-icon");
+      const pathTipItem = this.createFocusRootItem("Current Path", "qx-tip-icon");
       pathTipItem.description = this.rootPath;
       items.unshift(pathTipItem);
-      // items.push(this.createFocusRootItem("—— 根目录操作 ——"));
     }
 
     return items;
@@ -144,10 +142,8 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<FileItem> {
   }
 
   async revealItem(fileUri: vscode.Uri) {
-    // 找到新创建的文件对应的树视图项
     const item = await this.findItem(fileUri);
     if (item) {
-      // 展开到这个项，并将焦点设置到这个项上
       await this.treeView?.reveal(item, {
         select: true,
         focus: true,
